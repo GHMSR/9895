@@ -1,0 +1,293 @@
+package org.firstinspires.ftc.robotcontroller;
+
+import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cRangeSensor;
+import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark;
+import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
+import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackable;
+import org.firstinspires.ftc.robotcore.external.ClassFactory;
+import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
+import com.qualcomm.robotcore.hardware.ColorSensor;
+import com.qualcomm.robotcore.hardware.NormalizedColorSensor;
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.util.ElapsedTime;
+
+import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.HardwareDevice;
+import com.qualcomm.robotcore.hardware.DcMotor.RunMode;
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+import com.qualcomm.robotcore.hardware.CompassSensor;
+@Autonomous(name = "8511", group = "Autonomous1")
+public class Auto extends LinearOpMode {
+    VuforiaLocalizer vuforia;
+    @Override
+    public void runOpMode() {
+        int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
+        VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters(cameraMonitorViewId);
+        parameters.vuforiaLicenseKey = "AZD32X//////AAAAGda4l/BycEy9uro652HzWTNmkO5wDYaf9CstxdYJWJ+dESH5pOgtbI2F1FAkl2m0ku7Na0s0C+fb9R9VW/xEqTseaGslFxq6p4k6kZ8uc3FDnTdaohljP3gQ+imXJdgNLMn/wjHSN7LEjAtlUpK0P9YRThHavOcn9v7fSOk8/CSa2rF/rsrNzYrsE7mFBAbaHgbmT32Sco3NrMczmeJYm+F/wrKvkQuLPAykROWetnT6tZ4jSvLmiU4a4iiAc8DRuhAT600w2rCEINWK7V1D5D5qwOOCY1+Bd+GjCOzPeAftl6nGMil+l3CoYQ22zxgq1xoScCI2ComoYrpgBgmXjS2+p7gjKlVhctQvirtliM9C";
+        parameters.cameraDirection = VuforiaLocalizer.CameraDirection.BACK;
+        this.vuforia = ClassFactory.createVuforiaLocalizer(parameters);
+        VuforiaTrackables relicTrackables = this.vuforia.loadTrackablesFromAsset("RelicVuMark");
+        VuforiaTrackable relicTemplate = relicTrackables.get(0);
+        relicTemplate.setName("relicVuMarkTemplate"); // can help in debugging; otherwise not necessary
+
+
+
+        boolean blue = false;
+        double servopos = 0;
+         Servo servo;
+        boolean red = false;
+        DcMotor right1;
+        DcMotor left1;
+        DcMotor right2;
+        DcMotor left2;
+        left1 = hardwareMap.dcMotor.get("M1");
+        left2 = hardwareMap.dcMotor.get("M2");
+        right1 = hardwareMap.dcMotor.get("M3");
+        right2 = hardwareMap.dcMotor.get("M4");
+        servo = hardwareMap.get(Servo.class, "S1");
+        left1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        right2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        left2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        right1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+       /* left1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        right1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        left2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        right2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+        left1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        right2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        left2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        right1.setMode(DcMotor.RunMode.RUN_TO_POSITION);*/
+        int level = 1;
+
+
+        ColorSensor colorSensor1;
+        colorSensor1 = hardwareMap.get(ColorSensor.class, "sensor_color1");
+        ColorSensor colorSensor2;
+        colorSensor2 = hardwareMap.get(ColorSensor.class, "sensor_color2");
+        CompassSensor compass;
+        compass = hardwareMap.get(CompassSensor.class, "compass");
+        compass.setMode(CompassSensor.CompassMode.MEASUREMENT_MODE);
+
+        if(colorSensor1.blue() > colorSensor1.red()) {
+            blue =true;
+        }
+        else if(colorSensor1.blue() < colorSensor1.red())  {
+            red = true;
+        }
+        double Tcomp = 0;
+        Tcomp = getDirection();
+       
+        boolean busy = false;
+        double comp = 0;
+        comp = getDirection();
+        
+        waitForStart();
+        relicTrackables.activate();
+        while (opModeIsActive()) {
+            if (left1.isBusy() && right1.isBusy()){
+                busy = true;
+            }
+            comp = getDirection();
+            if (Tcomp > comp){
+            	right1.setPower(1);
+            	right2.setPower(1);
+            	left1.setPower(-1);
+            	left2.setPower(-1);
+            }
+            if (Tcomp < comp){
+            	right1.setPower(-1);
+            	right2.setPower(-1);
+            	left1.setPower(1);
+            	left2.setPower(1);
+            }
+
+            boolean center = false;
+            boolean right = false;
+            boolean left = false;
+            RelicRecoveryVuMark vuMark = RelicRecoveryVuMark.from(relicTemplate);
+            if (vuMark != RelicRecoveryVuMark.RIGHT) {
+                right = true;
+            }
+            if (vuMark != RelicRecoveryVuMark.LEFT) {
+                left = true;
+            }
+            if (vuMark != RelicRecoveryVuMark.CENTER) {
+                center = true;
+            }
+            int rightpos1 = right1.getCurrentPosition();
+            int rightpos2 = right2.getCurrentPosition();
+            int leftpos1 = left1.getCurrentPosition();
+            int leftpos2 = left2.getCurrentPosition();
+
+            int gleftpos1 = left1.getTargetPosition();
+            int gleftpos2 = left2.getTargetPosition();
+            int grightpos1 = right1.getTargetPosition();
+            int grightpos2 = right2.getTargetPosition();
+
+       
+
+            if (leftpos1 == gleftpos1) {
+                left1.setPower(0);
+                left2.setPower(0);
+            }
+            if (rightpos1 == grightpos1) {
+                right1.setPower(0);
+                right2.setPower(0);
+            }
+            if (leftpos1 >= gleftpos1) {
+                left1.setPower(-.5);
+                left2.setPower(-.5);
+            }
+            if (rightpos1 >= grightpos1) {
+                right1.setPower(-.5);
+                right2.setPower(-.5);
+
+            }
+            if (leftpos1 <= gleftpos1){
+                left1.setPower(.5);
+                left2.setPower(.5);
+            }
+            if(rightpos1 >= grightpos1){
+                left1.setPower(.5);
+                left2.setPower(.5);
+            }
+            switch (level){
+                case 1:
+                    servo.setPosition(90);
+                     servopos = 90;
+                    
+                    if (servopos == getPosition() ){
+                        level++;
+                    }
+                    break;
+                case 2:
+                    //turn to hit
+                    if(red > blue){
+                 Tcomp + 15;
+                    }
+                    if(red < blue){
+                   Tcomp - 15;
+                    }
+                    if (comp == Tcomp - 15 || comp == Tcomp + 15){
+                        level++;
+                    }
+                    break;
+            /*    case 3:
+                    
+                    if(red > blue){
+                 Tcomp - 15;
+                    }
+                    if(red < blue){
+                   Tcomp + 15;
+                    }
+                     if (comp == Tcomp ){
+                        level++;
+                    }
+                    break;
+                case 4:
+                   
+                    if (leftpos1 == gleftpos1 && rightpos1 == grightpos1) {
+                        level++;
+                    
+
+                    break;
+                case 5:
+                    
+                    if(red() > blue() {
+                      Tcomp = comp + 90;
+                        right1.setTargetPosition(25);
+                    }
+                    else if(blue() > red()) {
+                        left1.setTargetPosition(25);
+                        right1.setTargetPosition(-25);
+                        Tcomp = comp - 90;
+                    }
+                    if (!isBusy()) {
+                        level++;
+                    }
+                    break;
+                case 6:
+                    //go to top of triangle
+                   left1.setPower(1)
+                   right1.setPower(-1)
+          /*if ((colorSensor1.red() > 100  || colorSensor2.red() > 100) || (colorSensor1.blue() > 100 || colorSensor2.blue()> 100 )){
+            left1.setTargetPosition(leftpos1);
+            right1.setTargetPosition(rightpos1);
+          }*/
+                    if (leftpos1 == gleftpos1 && rightpos1 == grightpos1) {
+                        level++;
+                    }
+                    break;
+                case 7:
+                    //go to center left or right
+                    if(red) {
+                        if(center){
+                            right1.setTargetPosition(rightpos1);
+                            left1.setTargetPosition(leftpos1 + 25);
+                        }
+                    }
+                    else if(blue) {
+                        if(center){
+                            right1.setTargetPosition(rightpos1 + 25);
+                            left1.setTargetPosition(leftpos1);
+                        }
+
+                    }
+                    else if(right){
+                        right1.setTargetPosition(rightpos1 + 25);
+                        left1.setTargetPosition(leftpos1 + 25);
+                        if(red) {
+
+                            right1.setTargetPosition(rightpos1);
+                            left1.setTargetPosition(leftpos1 + 25);
+
+                        }
+                        else if(blue) {
+
+                            right1.setTargetPosition(rightpos1 + 25);
+                            left1.setTargetPosition(leftpos1);
+
+                        }
+                    }
+                    else if(left){
+                        right1.setTargetPosition(rightpos1 - 25);
+                        left1.setTargetPosition(leftpos1 - 25 );
+                        if(red){
+                            right1.setTargetPosition(rightpos1);
+                            left1.setTargetPosition(leftpos1 + 25);
+                        }
+                        else if(blue){
+                            right1.setTargetPosition(rightpos1 + 25);
+                            left1.setTargetPosition(leftpos1);
+                        }
+                    }
+                    if (leftpos1 == gleftpos1 && rightpos1 == grightpos1) {
+                        level++;
+                    }
+
+                    break;
+                case 8:
+                    //go to box
+                    right1.setTargetPosition(rightpos1 + 40);
+                    left1.setTargetPosition(leftpos1 +40);
+
+                    if (busy = false) {
+                        level++;
+                    }
+                    break;
+                case 9:
+                    //put cube in box
+                    break;
+                    */
+            }
+        }
+    }
+}
