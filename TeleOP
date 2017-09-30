@@ -1,0 +1,92 @@
+package org.firstinspires.ftc.teamcode;
+
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.Gamepad;
+import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cRangeSensor;
+import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark;
+import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
+import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackable;
+import org.firstinspires.ftc.robotcore.external.ClassFactory;
+import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
+import com.qualcomm.robotcore.hardware.ColorSensor;
+import com.qualcomm.robotcore.hardware.NormalizedColorSensor;
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.util.ElapsedTime;
+import com.qualcomm.robotcore.hardware.HardwareDevice;
+import com.qualcomm.robotcore.hardware.DcMotor.RunMode;
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+@TeleOp(name = "omni", group = "code")
+//@Disabled
+public class Omni extends LinearOpMode {
+     @Override public void runOpMode() {
+         //Servo   rservo;
+         //  Servo   lservo;
+          DcMotor right1;
+    DcMotor left1;
+    DcMotor right2;
+    DcMotor left2;
+   left1 = hardwareMap.dcMotor.get("M1");
+    left2 = hardwareMap.dcMotor.get("M2");
+    right1 = hardwareMap.dcMotor.get("M3");
+    right2 = hardwareMap.dcMotor.get("M4");
+     // rservo = hardwareMap.get(Servo.class, "S2");
+       //lservo = hardwareMap.get(Servo.class, "S1");
+left1.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+left2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+right1.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+right2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+boolean back = false;
+    float x = 0;
+    float y = 0;
+    float M1 = 0;
+    
+    float M2 = 0;
+   
+    float M3 = 0;
+    
+    float M4 = 0;
+        waitForStart();
+           while (opModeIsActive()) {
+               if(gamepad1.left_bumper && gamepad1.x){
+                   back = true;
+               }
+                x = gamepad1.left_stick_x;
+                 y = gamepad1.left_stick_y;
+                 
+                 if(back){
+                     y = 0;
+                     x = 0;
+                 }
+            left1.setPower(y + x);
+           
+            right1.setPower(-y - x);
+            
+            left2.setPower(y + -x);
+           
+            right2.setPower(-y + x);
+            
+            if(gamepad1.leftbumper){
+            left1.setPower(-1);
+            left2.setPower(-1);
+            right1.setPower(1);
+            right2.setPower(1);
+            }
+            
+            if(gamepad1.rightbumper){
+            left1.setPower(1);
+            left2.setPower(1);
+            right1.setPower(-1);
+            right2.setPower(-1);
+               
+           
+           }
+
+}
+}
