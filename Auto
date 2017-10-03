@@ -170,22 +170,22 @@ public class Auto extends LinearOpMode {
                     break;
                 case 2:
                     //turn to hit
-                    if(red > blue){
+                    if(colorSensor1.red() > colorSensor1.blue()){
                  Tcomp + 15;
                     }
-                    if(red < blue){
+                    if(colorSensor1.red() < colorSensor1.blue()){
                    Tcomp - 15;
                     }
                     if (comp == Tcomp - 15 || comp == Tcomp + 15){
                         level++;
                     }
                     break;
-            /*    case 3:
+               case 3:
                     
-                    if(red > blue){
+                    if(colorSensor1.red() > colorSensor1.blue()){
                  Tcomp - 15;
                     }
-                    if(red < blue){
+                    if(colorSensor1.red() < colorSensor1.blue()){
                    Tcomp + 15;
                     }
                      if (comp == Tcomp ){
@@ -194,37 +194,37 @@ public class Auto extends LinearOpMode {
                     break;
                 case 4:
                    
-                    if (leftpos1 == gleftpos1 && rightpos1 == grightpos1) {
+                    
+                    
                         level++;
                     
 
                     break;
-                case 5:
+              /*  case 5:
                     
-                    if(red() > blue() {
+                    if(colorSensor1.red() > colorSensor1.blue() {
                       Tcomp = comp + 90;
-                        right1.setTargetPosition(25);
+                     
                     }
-                    else if(blue() > red()) {
-                        left1.setTargetPosition(25);
-                        right1.setTargetPosition(-25);
+                    else if(colorSensor1.blue() > colorSensor1.red()) {
+                      
                         Tcomp = comp - 90;
                     }
-                    if (!isBusy()) {
+                    if (Tcomp == comp) {
                         level++;
                     }
                     break;
                 case 6:
                     //go to top of triangle
-                   left1.setPower(1)
-                   right1.setPower(-1)
-          /*if ((colorSensor1.red() > 100  || colorSensor2.red() > 100) || (colorSensor1.blue() > 100 || colorSensor2.blue()> 100 )){
-            left1.setTargetPosition(leftpos1);
-            right1.setTargetPosition(rightpos1);
-          }*/
-                    if (leftpos1 == gleftpos1 && rightpos1 == grightpos1) {
-                        level++;
+                    if (colorSensor1.red() = 100 || colorSensor2.red() = 100 || colorSensor1.blue() = 100 || colorSensor1.red() = 100){
+                    level++;
                     }
+                   left1.setPower(1);
+                   left2.setPower(-1);
+                   right2.setPower(1);
+                   right1.setPower(-1);
+                    
+                  
                     break;
                 case 7:
                     //go to center left or right
