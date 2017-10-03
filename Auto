@@ -51,20 +51,12 @@ public class Auto extends LinearOpMode {
         right1 = hardwareMap.dcMotor.get("M3");
         right2 = hardwareMap.dcMotor.get("M4");
         servo = hardwareMap.get(Servo.class, "S1");
-        left1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        right2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        left2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        right1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
-       /* left1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        right1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        left2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        right2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+    
 
         left1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         right2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         left2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        right1.setMode(DcMotor.RunMode.RUN_TO_POSITION);*/
+        right1.setMode(DcMotor.RunMode.RUN_TO_POSITION);*
         int level = 1;
 
 
@@ -200,7 +192,7 @@ public class Auto extends LinearOpMode {
                     
 
                     break;
-              /*  case 5:
+                case 5:
                     
                     if(colorSensor1.red() > colorSensor1.blue() {
                       Tcomp = comp + 90;
@@ -228,7 +220,19 @@ public class Auto extends LinearOpMode {
                     break;
                 case 7:
                     //go to center left or right
+                    if(!encoder){
+                        left1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                       right2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                        left2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                        right1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+                     left1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                    right1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                    left2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                    right2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                      }
                     if(red) {
+                   
                         if(center){
                             right1.setTargetPosition(rightpos1);
                             left1.setTargetPosition(leftpos1 + 25);
@@ -236,39 +240,10 @@ public class Auto extends LinearOpMode {
                     }
                     else if(blue) {
                         if(center){
-                            right1.setTargetPosition(rightpos1 + 25);
-                            left1.setTargetPosition(leftpos1);
-                        }
+                        
 
                     }
-                    else if(right){
-                        right1.setTargetPosition(rightpos1 + 25);
-                        left1.setTargetPosition(leftpos1 + 25);
-                        if(red) {
-
-                            right1.setTargetPosition(rightpos1);
-                            left1.setTargetPosition(leftpos1 + 25);
-
-                        }
-                        else if(blue) {
-
-                            right1.setTargetPosition(rightpos1 + 25);
-                            left1.setTargetPosition(leftpos1);
-
-                        }
-                    }
-                    else if(left){
-                        right1.setTargetPosition(rightpos1 - 25);
-                        left1.setTargetPosition(leftpos1 - 25 );
-                        if(red){
-                            right1.setTargetPosition(rightpos1);
-                            left1.setTargetPosition(leftpos1 + 25);
-                        }
-                        else if(blue){
-                            right1.setTargetPosition(rightpos1 + 25);
-                            left1.setTargetPosition(leftpos1);
-                        }
-                    }
+                   
                     if (leftpos1 == gleftpos1 && rightpos1 == grightpos1) {
                         level++;
                     }
