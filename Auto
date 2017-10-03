@@ -59,7 +59,8 @@ public class Auto extends LinearOpMode {
         right1.setMode(DcMotor.RunMode.RUN_TO_POSITION);*
         int level = 1;
 
-
+       public boolean blue = false;
+       public boolean blue = true;
         ColorSensor colorSensor1;
         colorSensor1 = hardwareMap.get(ColorSensor.class, "sensor_color1");
         ColorSensor colorSensor2;
@@ -196,10 +197,10 @@ public class Auto extends LinearOpMode {
                     
                     if(colorSensor1.red() > colorSensor1.blue() {
                       Tcomp = comp + 90;
-                     
+                     red = true;
                     }
                     else if(colorSensor1.blue() > colorSensor1.red()) {
-                      
+                      blue = true;
                         Tcomp = comp - 90;
                     }
                     if (Tcomp == comp) {
@@ -220,8 +221,7 @@ public class Auto extends LinearOpMode {
                     break;
                 case 7:
                     //go to center left or right
-                    if(!encoder){
-                        left1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                     left1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
                        right2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
                         left2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
                         right1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -230,30 +230,64 @@ public class Auto extends LinearOpMode {
                     right1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
                     left2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
                     right2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-                      }
+                      
                     if(red) {
-                   
+                        left1.setTargetPosition(left1.getCurrentPosition() + 15);
+                         left1.setTargetPosition(left1.getCurrentPosition() + 15);
+                          left1.setTargetPosition(left1.getCurrentPosition() + 15);
+                          left1.setTargetPosition(left1.getCurrentPosition() + 15);
                         if(center){
-                            right1.setTargetPosition(rightpos1);
-                            left1.setTargetPosition(leftpos1 + 25);
+                           if(!left1.isBusy){
+                           level++;
+                           }
+                          //turn 90 degress
                         }
+                         else if(left){
+                         left1.setTargetPosition(left1.getCurrentPosition() + 15);
+                         left1.setTargetPosition(left1.getCurrentPosition() + 15);
+                          left1.setTargetPosition(left1.getCurrentPosition() + 15);
+                          left1.setTargetPosition(left1.getCurrentPosition() + 15);
+                          //move to left NEED MATH
+                          }
+                          else if(right){
+                           left1.setTargetPosition(left1.getCurrentPosition() + 15);
+                         left1.setTargetPosition(left1.getCurrentPosition() + 15);
+                          left1.setTargetPosition(left1.getCurrentPosition() + 15);
+                          left1.setTargetPosition(left1.getCurrentPosition() + 15);
+                          //need math
+                          }
                     }
-                    else if(blue) {
-                        if(center){
-                        
-
+                    else if(blue){
+                     left1.setTargetPosition(left1.getCurrentPosition() + 15);
+                         left1.setTargetPosition(left1.getCurrentPosition() + 15);
+                          left1.setTargetPosition(left1.getCurrentPosition() + 15);
+                          left1.setTargetPosition(left1.getCurrentPosition() + 15);
+                        //NEED MATH
+                     if(left) {
+                     left1.setTargetPosition(left1.getCurrentPosition() + 15);
+                         left1.setTargetPosition(left1.getCurrentPosition() + 15);
+                          left1.setTargetPosition(left1.getCurrentPosition() + 15);
+                          left1.setTargetPosition(left1.getCurrentPosition() + 15);
+                    }
+                       else if(center){
+                       if(!left1.isBusy){
+                           level++;
+                            }
                     }
                    
-                    if (leftpos1 == gleftpos1 && rightpos1 == grightpos1) {
-                        level++;
-                    }
+                  else if(right){
+                   left1.setTargetPosition(left1.getCurrentPosition() + 15);
+                         left1.setTargetPosition(left1.getCurrentPosition() + 15);
+                          left1.setTargetPosition(left1.getCurrentPosition() + 15);
+                          left1.setTargetPosition(left1.getCurrentPosition() + 15);
+                  }
 
                     break;
                 case 8:
                     //go to box
                     right1.setTargetPosition(rightpos1 + 40);
                     left1.setTargetPosition(leftpos1 +40);
-
+//NEED MATH
                     if (busy = false) {
                         level++;
                     }
@@ -261,7 +295,7 @@ public class Auto extends LinearOpMode {
                 case 9:
                     //put cube in box
                     break;
-                    */
+                    
             }
         }
     }
