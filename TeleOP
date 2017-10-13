@@ -26,18 +26,27 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 //@Disabled
 public class Omni extends LinearOpMode {
      @Override public void runOpMode() {
-         //Servo   rservo;
-         //  Servo   lservo;
+    
+          Servo   rservo2;
+          Servo   rservo1;
+          Servo   lservo2;
+           Servo   lservo1;
+           DcMotor lift;
+           
           DcMotor right1;
     DcMotor left1;
     DcMotor right2;
     DcMotor left2;
+    lift = hardwareMap.dcMotor.get("lift");
    left1 = hardwareMap.dcMotor.get("M1");
+   
     left2 = hardwareMap.dcMotor.get("M2");
     right1 = hardwareMap.dcMotor.get("M3");
     right2 = hardwareMap.dcMotor.get("M4");
-     // rservo = hardwareMap.get(Servo.class, "S2");
-       //lservo = hardwareMap.get(Servo.class, "S1");
+    rservo1 = hardwareMap.get(Servo.class, "S2");
+     lservo1 = hardwareMap.get(Servo.class, "S1");
+     rservo2 = hardwareMap.get(Servo.class, "S3");
+     lservo2 = hardwareMap.get(Servo.class, "S4");
 left1.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 left2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 right1.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -64,6 +73,7 @@ boolean back = false;
                      y = 0;
                      x = 0;
                  }
+                 
             left1.setPower(y + x);
            
             right1.setPower(-y - x);
@@ -72,14 +82,14 @@ boolean back = false;
            
             right2.setPower(-y + x);
             
-            if(gamepad1.leftbumper){
+            if(gamepad1.left_bumper){
             left1.setPower(-1);
             left2.setPower(-1);
             right1.setPower(1);
             right2.setPower(1);
             }
             
-            if(gamepad1.rightbumper){
+            if(gamepad1.right_bumper){
             left1.setPower(1);
             left2.setPower(1);
             right1.setPower(-1);
@@ -87,6 +97,32 @@ boolean back = false;
                
            
            }
+           lservo1.setPosition(1);
+           if(gamepad1.left_bumper){
+           lservo1.setPosition(5);
+           lservo2.setPosition(5);
+           rservo1.setPosition(-5);
+           rservo2.setPosition(-5);
+           
+           if(gamepad1.right_bumper){
+           lservo1.setPosition(-5);
+           lservo2.setPosition(-5);
+           rservo1.setPosition(5);
+           rservo2.setPosition(5);
+           
+           if(gamepad1.dpad_up){
+           lift.setPower(1); 
+           }
+           
+           if(gamepad1.dpad_down){
+           lift.setPower(-1);
+           }
+         
+           }
+           }
+           }
+
 
 }
+
 }
