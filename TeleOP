@@ -141,7 +141,7 @@ boolean back = false;
             right2.setPower(1);
             }
             
-            if(gamepad1.right_bumper){
+            if(gamepad2.right_bumper){
             left1.setPower(1);
             left2.setPower(1);
             right1.setPower(-1);
@@ -150,23 +150,23 @@ boolean back = false;
            
            }
            lservo1.setPosition(1);
-           if(gamepad1.left_bumper){
+           if(gamepad2.left_bumper){
            lservo1.setPosition(5);
            lservo2.setPosition(5);
            rservo1.setPosition(-5);
            rservo2.setPosition(-5);
            
-           if(gamepad1.right_bumper){
+           if(gamepad2.right_bumper){
            lservo1.setPosition(-5);
            lservo2.setPosition(-5);
            rservo1.setPosition(5);
            rservo2.setPosition(5);
            
-           if(gamepad1.dpad_up){
+           if(gamepad2.dpad_up){
            lift.setPower(1); 
            }
            
-           if(gamepad1.dpad_down){
+           if(gamepad2.dpad_down){
            lift.setPower(-1);
            }
          
