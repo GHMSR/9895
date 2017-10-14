@@ -29,28 +29,28 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 
 public class Omni extends LinearOpMode {
-public static void powery(x, y, r){
+public void powery(float x, float y, float r, DcMotor left1, DcMotor left2, DcMotor right1, DcMotor right2){
 left1.setPower(y + x + r);
 right1.setPower(-y - x + r);
 left2.setPower(y + -x + r);
 right2.setPower(-y + x + r);
 
 }
-public static void powerb(x, y, r){
+public static void powerb(float x, float y, float r, DcMotor left1, DcMotor left2, DcMotor right1, DcMotor right2){
 left1.setPower(y + x + r);
 right1.setPower(-y - x + r);
 left2.setPower(y + -x + r);
 right2.setPower(-y + x + r);
 
 }
-public static void powera(x, y, r){
+public static void powera(float x, float y, float r, DcMotor left1, DcMotor left2, DcMotor right1, DcMotor right2){
 left1.setPower(y + x + r);
 right1.setPower(-y - x + r);
 left2.setPower(y + -x + r);
 right2.setPower(-y + x + r);
 
 }
-public static void powerx(x, y, r){
+public static void powerx(float x, float y, float r, DcMotor left1, DcMotor left2, DcMotor right1, DcMotor right2){
 left1.setPower(y + x + r);
 right1.setPower(-y - x + r);
 left2.setPower(y + -x + r);
@@ -114,15 +114,16 @@ boolean back = false;
                 }
                  switch(direction){
                  case 1:
-                 powery(x, y, r);
+                 powery(x, y, r, left1, left2, right1, right2);
                  break;
                  case 2:
-                   powerb(x, -y, r);
+                   powerb(x, -y, r, left1, left2, right1, right2);
                  break;
                  case 3:
-                 powera(-x, y, r)
+                 powera(-x, y, r, left1, left2, right1, right2);
                  break;
-                 case 4(-x, -y, r)
+                 case 4:
+                     powerx(-x, -y, r, left1, left2, right1, right2);
                  break;
                  }
             left1.setPower(y + x);
