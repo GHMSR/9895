@@ -22,9 +22,41 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.hardware.HardwareDevice;
 import com.qualcomm.robotcore.hardware.DcMotor.RunMode;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+
+
 @TeleOp(name = "omni", group = "code")
 //@Disabled
+
+
 public class Omni extends LinearOpMode {
+public void powery(float x, float y, float r, DcMotor left1, DcMotor left2, DcMotor right1, DcMotor right2){
+left1.setPower(y + x + r);
+right1.setPower(-y - x + r);
+left2.setPower(y + -x + r);
+right2.setPower(-y + x + r);
+
+}
+public static void powerb(float x, float y, float r, DcMotor left1, DcMotor left2, DcMotor right1, DcMotor right2){
+left1.setPower(y + x + r);
+right1.setPower(-y - x + r);
+left2.setPower(y + -x + r);
+right2.setPower(-y + x + r);
+
+}
+public static void powera(float x, float y, float r, DcMotor left1, DcMotor left2, DcMotor right1, DcMotor right2){
+left1.setPower(y + x + r);
+right1.setPower(-y - x + r);
+left2.setPower(y + -x + r);
+right2.setPower(-y + x + r);
+
+}
+public static void powerx(float x, float y, float r, DcMotor left1, DcMotor left2, DcMotor right1, DcMotor right2){
+left1.setPower(y + x + r);
+right1.setPower(-y - x + r);
+left2.setPower(y + -x + r);
+right2.setPower(-y + x + r);
+
+}
      @Override public void runOpMode() {
     
           Servo   rservo2;
@@ -40,9 +72,9 @@ public class Omni extends LinearOpMode {
     lift = hardwareMap.dcMotor.get("lift");
    left1 = hardwareMap.dcMotor.get("M1");
    
-    left2 = hardwareMap.dcMotor.get("M2");
-    right1 = hardwareMap.dcMotor.get("M3");
-    right2 = hardwareMap.dcMotor.get("M4");
+    left2 = hardwareMap.dcMotor.get("M4");
+    right1 = hardwareMap.dcMotor.get("M2");
+    right2 = hardwareMap.dcMotor.get("M3");
     rservo1 = hardwareMap.get(Servo.class, "S2");
      lservo1 = hardwareMap.get(Servo.class, "S1");
      rservo2 = hardwareMap.get(Servo.class, "S3");
@@ -54,26 +86,46 @@ right2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 boolean back = false;
     float x = 0;
     float y = 0;
+    float r = 0;
     float M1 = 0;
     
     float M2 = 0;
    
     float M3 = 0;
-    
+    int direction = 0;
     float M4 = 0;
         waitForStart();
            while (opModeIsActive()) {
-               if(gamepad1.left_bumper && gamepad1.x){
-                   back = true;
-               }
+               
                 x = gamepad1.left_stick_x;
                  y = gamepad1.left_stick_y;
-                 
-                 if(back){
-                     y = 0;
-                     x = 0;
+                 r = gamepad1.right_stick_x;
+                 if (gamepad1.y){
+                 direction = 1;
                  }
-                 
+                if (gamepad1.x){
+                direction = 2;
+                }
+                if (gamepad1.a){
+                direction = 3;
+                }
+                if (gamepad1.b){
+                direction = 4;
+                }
+                 switch(direction){
+                 case 1:
+                 powery(x, y, r, left1, left2, right1, right2);
+                 break;
+                 case 2:
+                   powerb(x, -y, r, left1, left2, right1, right2);
+                 break;
+                 case 3:
+                 powera(-x, y, r, left1, left2, right1, right2);
+                 break;
+                 case 4:
+                     powerx(-x, -y, r, left1, left2, right1, right2);
+                 break;
+                 }
             left1.setPower(y + x);
            
             right1.setPower(-y - x);
