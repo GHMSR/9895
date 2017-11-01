@@ -69,9 +69,10 @@ right2.setPower(-y + x + r);
     DcMotor left1;
     DcMotor right2;
     DcMotor left2;
+    Servo arm
     lift = hardwareMap.dcMotor.get("lift");
    left1 = hardwareMap.dcMotor.get("M1");
-   
+   arm = hardwareMap.get(Servo.class, "arm");
     left2 = hardwareMap.dcMotor.get("M4");
     right1 = hardwareMap.dcMotor.get("M2");
     right2 = hardwareMap.dcMotor.get("M3");
@@ -79,6 +80,7 @@ right2.setPower(-y + x + r);
      lservo1 = hardwareMap.get(Servo.class, "S1");
      rservo2 = hardwareMap.get(Servo.class, "S3");
      lservo2 = hardwareMap.get(Servo.class, "S4");
+     
 left1.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 left2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 right1.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
